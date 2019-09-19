@@ -158,12 +158,14 @@ function moveUp(){
                         showMoveAnimation(i,j,k,j);
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
+                        continue;
                     }else if(board[k][j] == board[i][j] && noBlockVertical(j,k,i,board)){
                         //move up
                         showMoveAnimation(i,j,k,j);
                         //add
                         board[k][j] = board[i][j]*2;
                         board[i][j] = 0;
+                        continue;
                     }
                 }
             }
@@ -189,12 +191,14 @@ function moveRight(){
                         showMoveAnimation(i,j,i,k);
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
+                        continue;
                     }else if(board[i][k] == board[i][j] && noBlockHorizontal(i,j,k,board)){//右边为可合并值
                         // move
                         showMoveAnimation(i,j,i,k);
                         // add
                         board[i][k] += board[i][j];
                         board[i][j] = 0;
+                        continue;
                     }
                 }
             }
@@ -218,12 +222,14 @@ function moveDown(){
                         showMoveAnimation(i,j,k,j);
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
+                        continue;
                     }else if(board[k][j] == board[i][j] && noBlockVertical(j,i,k,board)){
                         // move
                         showMoveAnimation(i,j,k,j);
                         // add
                         board[k][j] += board[i][j];
                         board[i][j] = 0;
+                        continue;
                     }
                 }
             }
