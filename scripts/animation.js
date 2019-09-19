@@ -12,3 +12,13 @@ function showNumber(i,j,number){
         left: getPosLeft(i,j)
     },50);
 }
+
+function showMoveAnimation(fromX,fromY,toX,toY){
+    let numberCell = $('#number-cell-' + fromX + '-' + fromY),
+        top = getPosTop(toX,toY),
+        left = getPosLeft(toX,toY);
+    numberCell.animate({
+        top: top+"px",
+        left: left+"px"
+    },200);
+}

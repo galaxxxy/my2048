@@ -50,8 +50,7 @@ function updateBoardView() {
                     left: getPosLeft(i, j) + 'px',
                     'background-color': getNumberBackgroundColor(board[i][j]),
                     color: getNumberColor(board[i][j])
-                });
-
+                }).text(board[i][j]);//更新面板时也更新非零值的显示
             }
         }
     }
@@ -81,3 +80,157 @@ function generateOneNum(){
     showNumber(x,y,value);
     return true;
 }
+
+$(document).keydown(function (e) {
+    switch (e.keyCode) {
+        case 37://left
+            if (moveLeft()) {
+                setTimeout(generateOneNum,210);
+                isGameOver();
+            }
+            break;
+        case 38://up
+            if (moveUp()) {
+                setTimeout(generateOneNum,210);
+                isGameOver();
+            }
+            break;
+        case 39://right 
+            if (moveRight()) {
+                setTimeout(generateOneNum,210);
+                isGameOver();
+            }
+            break;
+        case 40:// down
+            if (moveDown()){
+                setTimeout(generateOneNum,210);
+                isGameOver();
+            }
+            break;
+        default:
+            break;
+    }
+});
+
+function moveLeft(){
+    if(!canMoveLeft(board)){
+        return false;
+    }
+    //move left
+    for (let i = 0; i < 4; i++) {
+        for (let j = 1; j < 4; j++) {
+            if(board[i][j] !== 0){
+                for(let k = 0; k < j; k++){
+                    if(board[i][k] == 0 && noBlockHorizontal(i,k,j,board)){
+                        //move
+                        showMoveAnimation(i,j,i,k);
+                        board[i][k] = board[i][j];
+                        board[i][j] = 0;
+                        continue;
+                    }else if(board[i][k] == board[i][j] && noBlockHorizontal(i,k,j,board)){
+                        //move
+                        showMoveAnimation(i,j,i,k);
+                        //add
+                        board[i][k] = board[i][j]*2;
+                        board[i][j] = 0;
+                        continue;
+                    }
+                }
+            }
+        }
+    }
+    setTimeout(updateBoardView,200);
+    return true;
+}
+
+function moveUp(){
+    //判断是否能够向上移动
+    if(!canMoveUp(board)){
+        return false;
+    }
+    //move up
+    for (let i = 1; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if(board[i][j] !== 0){
+                for(let k = 0; k < i; k++){
+                    if(board[k][j] == 0 && noBlockVertical(j,k,i,board)){
+                        //move up
+                        showMoveAnimation(i,j,k,j);
+                        board[k][j] = board[i][j];
+                        board[i][j] = 0;
+                    }else if(board[k][j] == board[i][j] && noBlockVertical(j,k,i,board)){
+                        //move up
+                        showMoveAnimation(i,j,k,j);
+                        //add
+                        board[k][j] = board[i][j]*2;
+                        board[i][j] = 0;
+                    }
+                }
+            }
+        }
+    }
+    setTimeout(updateBoardView,200);
+    return true;
+}
+
+function moveRight(){
+    // 判断是否能向右移动
+    if(!canMoveRight(board)){
+        return false;
+    }
+    // move right
+    for (let i = 3; i > -1; i--) {
+        for (let j = 2; j > -1; j--) {
+            if (board[i][j] !== 0) {
+                for(let k = 3; k>j; k--){
+                    // 右方为0值
+                    if(board[i][k] == 0 && noBlockHorizontal(i,j,k,board)){
+                        // move
+                        showMoveAnimation(i,j,i,k);
+                        board[i][k] = board[i][j];
+                        board[i][j] = 0;
+                    }else if(board[i][k] == board[i][j] && noBlockHorizontal(i,j,k,board)){//右边为可合并值
+                        // move
+                        showMoveAnimation(i,j,i,k);
+                        // add
+                        board[i][k] += board[i][j];
+                        board[i][j] = 0;
+                    }
+                }
+            }
+        }
+    }
+    setTimeout(updateBoardView,200);
+    return true;
+}
+
+function moveDown(){
+    // 是否能下移
+    if(!canMoveDown(board)){
+        return false;
+    }
+    for(let i = 2; i > -1; i--){
+        for(let j = 3; j > -1; j--){
+            if(board[i][j] !== 0){
+                for(let k = 3; k > i; k--){
+                    if(board[k][j] == 0 && noBlockVertical(j,i,k,board)){
+                        // move
+                        showMoveAnimation(i,j,k,j);
+                        board[k][j] = board[i][j];
+                        board[i][j] = 0;
+                    }else if(board[k][j] == board[i][j] && noBlockVertical(j,i,k,board)){
+                        // move
+                        showMoveAnimation(i,j,k,j);
+                        // add
+                        board[k][j] += board[i][j];
+                        board[i][j] = 0;
+                    }
+                }
+            }
+        }
+    }
+    setTimeout(updateBoardView,200);
+    return true;
+}
+
+function isGameOver(){}

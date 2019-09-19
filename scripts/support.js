@@ -40,3 +40,75 @@ function noSpace(board){
     }
     return true;
 }
+
+function canMoveLeft(board){
+    for (let i = 0; i < 4; i++) {
+        for (let j = 1; j < 4; j++) {
+            if(board[i][j] !== 0) {
+                if(board[i][j-1] == 0 || board[i][j-1] == board[i][j]){//左侧无数字或数字可合并
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function canMoveUp(board){
+    for (let i = 1; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if(board[i][j] !== 0){
+                if(board[i-1][j] == 0 || board[i][j] == board[i-1][j]){//上方无数字或数字可合并
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function canMoveRight(board) {
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[i][j] !== 0) {
+                //右方有零值或可合并数值
+                if (board[i][j+1] == 0 || board[i][j] == board[i][j+1]) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function canMoveDown(board){
+    for(let i = 0; i < 3; i++){
+        for(let j = 0; j < 4; j++){
+            if(board[i][j] !== 0){
+                // 下方有零值或可合并数值
+                if(board[i+1][j] == 0 || board[i+1][j] == board[i][j]){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function noBlockHorizontal(row,left,right,board){
+    for(let i = left + 1; i < right; i++){
+        if(board[row][i] !== 0){
+            return false;
+        }
+    }
+    return true;
+}
+
+function noBlockVertical(column,top,bottom,board){
+    for(let i = top + 1; i < bottom; i++){
+        if(board[i][column] !== 0){
+            return false;
+        }
+    }
+    return true;
+}
