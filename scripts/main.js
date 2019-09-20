@@ -1,5 +1,6 @@
 let board = [],
-    score = 0;
+    score = 0,
+    hasConflicted = [];// 记录每个cell是否合并
 
 $(function () {
     $("#newgameButton").click(function () {
@@ -27,6 +28,7 @@ function init() {
         }
     }
     board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+    hasConflicted = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
     updateBoardView();
 }
 
@@ -54,6 +56,7 @@ function updateBoardView() {
                     color: getNumberColor(board[i][j])
                 }).text(board[i][j]);//更新面板时也更新非零值的显示
             }
+            hasConflicted[i][j] = 0;//initalize
         }
     }
 }
@@ -129,7 +132,7 @@ function moveLeft(){
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    }else if(board[i][k] == board[i][j] && noBlockHorizontal(i,k,j,board)){
+                    }else if(board[i][k] == board[i][j] && noBlockHorizontal(i,k,j,board) && !hasConflicted[i][k]){
                         //move
                         showMoveAnimation(i,j,i,k);
                         //add
@@ -137,8 +140,10 @@ function moveLeft(){
                         board[i][j] = 0;
                         // add score
                         score += board[i][k];
-                        //show score
+                        // show score
                         updateScore(score);
+                        // update hasConflicted
+                        hasConflicted[i][k] = 1;
                         continue;
                     }
                 }
@@ -165,7 +170,7 @@ function moveUp(){
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    }else if(board[k][j] == board[i][j] && noBlockVertical(j,k,i,board)){
+                    }else if(board[k][j] == board[i][j] && noBlockVertical(j,k,i,board) && !hasConflicted[k][j]){
                         //move up
                         showMoveAnimation(i,j,k,j);
                         //add
@@ -175,6 +180,8 @@ function moveUp(){
                         score += board[k][j];
                         //show score
                         updateScore(score);
+                        // update hasConflicted
+                        hasConflicted[k][j] = 1;
                         continue;
                     }
                 }
@@ -202,7 +209,7 @@ function moveRight(){
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    }else if(board[i][k] == board[i][j] && noBlockHorizontal(i,j,k,board)){//右边为可合并值
+                    }else if(board[i][k] == board[i][j] && noBlockHorizontal(i,j,k,board) && !hasConflicted[i][k]){//右边为可合并值
                         // move
                         showMoveAnimation(i,j,i,k);
                         // add
@@ -212,6 +219,8 @@ function moveRight(){
                         score += board[i][k];
                         //show score
                         updateScore(score);
+                        // update hasConflicted
+                        hasConflicted[i][k] = 1;
                         continue;
                     }
                 }
@@ -237,7 +246,7 @@ function moveDown(){
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                         continue;
-                    }else if(board[k][j] == board[i][j] && noBlockVertical(j,i,k,board)){
+                    }else if(board[k][j] == board[i][j] && noBlockVertical(j,i,k,board) && !hasConflicted[k][j]){
                         // move
                         showMoveAnimation(i,j,k,j);
                         // add
@@ -247,6 +256,8 @@ function moveDown(){
                         score += board[k][j];
                         //show score
                         updateScore(score);
+                        // update hasConflicted
+                        hasConflicted[k][j] = 1;
                         continue;
                     }
                 }
