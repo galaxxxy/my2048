@@ -239,4 +239,13 @@ function moveDown(){
     return true;
 }
 
-function isGameOver(){}
+function isGameOver(){
+    // 无格子且不能移动
+    if(noSpace(board)&&noMove(board)){
+        gameOver();
+    }
+}
+
+function gameOver(){
+    alert("game over!");
+}

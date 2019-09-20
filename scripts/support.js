@@ -112,3 +112,10 @@ function noBlockVertical(column,top,bottom,board){
     }
     return true;
 }
+
+function noMove(board){
+    if(canMoveDown(board)||canMoveLeft(board)||canMoveRight(board)||canMoveLeft(board)){
+        return false;
+    }
+    return true;
+}
