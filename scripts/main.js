@@ -64,19 +64,31 @@ function updateBoardView() {
 function generateOneNum(){
     let x = 0,
         y = 0,
-        value = 0;
+        value = 0,
+        times = 1;//循环次数
     if(noSpace(board)){
         return false;
     }
     //生成位置
     x = Math.floor(Math.random()*4);
     y = Math.floor(Math.random()*4);
-    while(true){
+    for(; times <= 50; times++){
         if(board[x][y] == 0){
             break;
         }
         x = Math.floor(Math.random()*4);
         y = Math.floor(Math.random()*4);
+    }
+    //人工找寻空位
+    if(times > 50){
+        for(let i = 0; i < 4; i++){
+            let index = board[i].indexOf(0);
+            if(index !== -1){
+                x = i;
+                y = index;
+                break;
+            }
+        }
     }
     //生成值
     value = Math.random() < 0.5 ? 2 : 4;
