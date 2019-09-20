@@ -22,3 +22,7 @@ function showMoveAnimation(fromX,fromY,toX,toY){
         left: left+"px"
     },200);
 }
+
+function updateScore(score){
+    $("span#score").text(score);
+}

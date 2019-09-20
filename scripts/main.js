@@ -15,6 +15,8 @@ function newgame() {
     //随机生成两个含数字的格子
     generateOneNum();
     generateOneNum();
+    // 分数初始化
+    score = 0;
 }
 
 function init() {
@@ -86,26 +88,26 @@ $(document).keydown(function (e) {
         case 37://left
             if (moveLeft()) {
                 setTimeout(generateOneNum,210);
-                isGameOver();
             }
+            isGameOver();
             break;
         case 38://up
             if (moveUp()) {
                 setTimeout(generateOneNum,210);
-                isGameOver();
             }
+            isGameOver();
             break;
         case 39://right 
             if (moveRight()) {
                 setTimeout(generateOneNum,210);
-                isGameOver();
             }
+            isGameOver();
             break;
         case 40:// down
             if (moveDown()){
                 setTimeout(generateOneNum,210);
-                isGameOver();
             }
+            isGameOver();
             break;
         default:
             break;
@@ -133,6 +135,10 @@ function moveLeft(){
                         //add
                         board[i][k] = board[i][j]*2;
                         board[i][j] = 0;
+                        // add score
+                        score += board[i][k];
+                        //show score
+                        updateScore(score);
                         continue;
                     }
                 }
@@ -165,6 +171,10 @@ function moveUp(){
                         //add
                         board[k][j] = board[i][j]*2;
                         board[i][j] = 0;
+                        // add score
+                        score += board[k][j];
+                        //show score
+                        updateScore(score);
                         continue;
                     }
                 }
@@ -198,6 +208,10 @@ function moveRight(){
                         // add
                         board[i][k] += board[i][j];
                         board[i][j] = 0;
+                        // add score
+                        score += board[i][k];
+                        //show score
+                        updateScore(score);
                         continue;
                     }
                 }
@@ -229,6 +243,10 @@ function moveDown(){
                         // add
                         board[k][j] += board[i][j];
                         board[i][j] = 0;
+                        // add score
+                        score += board[k][j];
+                        //show score
+                        updateScore(score);
                         continue;
                     }
                 }
@@ -242,6 +260,7 @@ function moveDown(){
 function isGameOver(){
     // 无格子且不能移动
     if(noSpace(board)&&noMove(board)){
+        console.log("dsfds");
         gameOver();
     }
 }
