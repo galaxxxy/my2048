@@ -1,9 +1,14 @@
+let deviceWidth = window.screen.availWidth,// 设备屏幕宽度
+    gridContainerWidth = 0.92 * deviceWidth,// 棋盘宽度
+    cellSideLength = 0.18 * deviceWidth,// 棋盘格边长
+    cellSpace = 0.04 * deviceWidth;// 格间距
+    
 function getPosTop(x,y){
-    return 20 + x*120;
+    return cellSpace + x*(cellSideLength+cellSpace);
 }
 
 function getPosLeft(x,y){
-    return 20 + y*120;
+    return cellSpace + y*(cellSideLength+cellSpace);
 }
 
 function getNumberBackgroundColor(value){

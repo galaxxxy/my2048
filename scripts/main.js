@@ -3,12 +3,33 @@ let board = [],
     hasConflicted = [];// 记录每个cell是否合并
 
 $(function () {
+    if(deviceWidth > 500){
+        gridContainerWidth = 500;
+        cellSpace = 20;
+        cellSideLength = 100;
+    }
+    prepareForMobile();
     $("#newgameButton").click(function () {
         newgame();
         return false;
     });
     newgame();
 });
+
+function prepareForMobile(){
+    $("#grid-container").css({
+        width: gridContainerWidth - 2*cellSpace,
+        height: gridContainerWidth - 2*cellSpace,
+        padding: cellSpace,
+        'border-radius': 0.02*gridContainerWidth,
+    });
+
+    $("#grid-cell").css({
+        width: cellSideLength,
+        height: cellSideLength,
+        'border-radius': 0.02*cellSideLength,
+    });
+}
 
 function newgame() {
     //初始化grid-container
@@ -24,7 +45,12 @@ function init() {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             let cell = $("#grid-cell-" + i + "-" + j);
-            cell.css({ top: getPosTop(i, j) + 'px', left: getPosLeft(i, j) + 'px' });
+            cell.css({
+                top: getPosTop(i, j) + 'px',
+                left: getPosLeft(i, j) + 'px',
+                width: cellSideLength,
+                height: cellSideLength
+            });
         }
     }
     board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
@@ -44,13 +70,13 @@ function updateBoardView() {
                 numberCell.css({
                     width: "0px",
                     height: "0px",
-                    top: getPosTop(i, j) + 50 + 'px',
-                    left: getPosLeft(i, j) + 50 + 'px'
+                    top: getPosTop(i, j) + cellSideLength/2 + 'px',
+                    left: getPosLeft(i, j) + cellSideLength/2 + 'px'
                 });
             } else {
                 numberCell.css({
-                    width: "100px",
-                    height: "100px",
+                    width: cellSideLength,
+                    height: cellSideLength,
                     top: getPosTop(i, j) + 'px',
                     left: getPosLeft(i, j) + 'px',
                     'background-color': getNumberBackgroundColor(board[i][j]),
@@ -60,6 +86,10 @@ function updateBoardView() {
             hasConflicted[i][j] = 0;//initalize
         }
     }
+    $(".number-cell").css({
+        'line-height': cellSideLength+'px',
+        'font-size': 0.6*cellSideLength+'px'
+    });
 }
 
 function generateOneNum(){
