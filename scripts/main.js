@@ -11,13 +11,13 @@ $(function () {
 });
 
 function newgame() {
+    // 分数初始化
+    score = 0;
     //初始化grid-container
     init();
     //随机生成两个含数字的格子
     generateOneNum();
     generateOneNum();
-    // 分数初始化
-    score = 0;
 }
 
 function init() {
@@ -30,6 +30,7 @@ function init() {
     board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
     hasConflicted = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
     updateBoardView();
+    updateScore(score);
 }
 
 function updateBoardView() {
