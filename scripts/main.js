@@ -2,6 +2,12 @@ let board = [],
     score = 0,
     hasConflicted = [];// 记录每个cell是否合并
 
+//用于存储触摸事件的坐标
+let startX = 0,
+    startY = 0,
+    endX = 0,
+    endY = 0;
+
 $(function () {
     if(deviceWidth > 500){
         gridContainerWidth = 500;
@@ -130,26 +136,32 @@ function generateOneNum(){
 }
 
 $(document).keydown(function (e) {
+    //防止出现sidebar时方向键带动页面移动
+    //e.preventDefault();
     switch (e.keyCode) {
         case 37://left
-            if (moveLeft()) {
+        e.preventDefault();
+        if (moveLeft()) {
                 setTimeout(generateOneNum,210);
                 setTimeout(isGameOver,250);
             }
             break;
         case 38://up
+        e.preventDefault();
             if (moveUp()) {
                 setTimeout(generateOneNum,210);
                 setTimeout(isGameOver,250);
             }
             break;
         case 39://right 
+        e.preventDefault();
             if (moveRight()) {
                 setTimeout(generateOneNum,210);
                 setTimeout(isGameOver,250);
             }
             break;
         case 40:// down
+        e.preventDefault();
             if (moveDown()){
                 setTimeout(generateOneNum,210);
                 setTimeout(isGameOver,250);
@@ -157,6 +169,61 @@ $(document).keydown(function (e) {
             break;
         default:
             break;
+    }
+});
+
+document.addEventListener('touchmove',function(e){
+    e.preventDefault();
+});
+
+document.addEventListener('touchstart',function(e){
+    startX = e.touches[0].pageX;
+    startY = e.touches[0].pageY;
+});
+
+document.addEventListener('touchend',function(e){
+    let deltaX = 0,
+        deltaY = 0;
+
+    endX = e.changedTouches[0].pageX;
+    endY = e.changedTouches[0].pageY;
+
+    deltaX = startX - endX;
+    deltaY = startY - endY;
+
+    //判断水平还是垂直滑动
+    if(Math.abs(deltaX) > Math.abs(deltaY)){
+        //水平滑动
+        //判断方向
+        if(deltaX > 0){
+            //左滑
+            if (moveLeft()) {
+                setTimeout(generateOneNum,210);
+                setTimeout(isGameOver,250);
+            }
+        }else if(deltaX < 0){
+            //右滑
+            if (moveRight()) {
+                setTimeout(generateOneNum,210);
+                setTimeout(isGameOver,250);
+            }
+        }
+    }else if(Math.abs(deltaX) < Math.abs(deltaY)){
+        //垂直滑动
+        //判断方向
+        if(deltaY > 0){
+            //上滑
+            if (moveUp()) {
+                setTimeout(generateOneNum,210);
+                setTimeout(isGameOver,250);
+            }
+        }else if(deltaX < 0){
+            //下滑
+            if (moveDown()){
+                setTimeout(generateOneNum,210);
+                setTimeout(isGameOver,250);
+            }
+        }
     }
 });
 
