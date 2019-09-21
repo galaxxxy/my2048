@@ -11,8 +11,6 @@ $(function () {
 });
 
 function newgame() {
-    // 分数初始化
-    score = 0;
     //初始化grid-container
     init();
     //随机生成两个含数字的格子
@@ -21,6 +19,8 @@ function newgame() {
 }
 
 function init() {
+    // 分数初始化
+    score = 0;
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             let cell = $("#grid-cell-" + i + "-" + j);
@@ -104,26 +104,26 @@ $(document).keydown(function (e) {
         case 37://left
             if (moveLeft()) {
                 setTimeout(generateOneNum,210);
+                setTimeout(isGameOver,250);
             }
-            isGameOver();
             break;
         case 38://up
             if (moveUp()) {
                 setTimeout(generateOneNum,210);
+                setTimeout(isGameOver,250);
             }
-            isGameOver();
             break;
         case 39://right 
             if (moveRight()) {
                 setTimeout(generateOneNum,210);
+                setTimeout(isGameOver,250);
             }
-            isGameOver();
             break;
         case 40:// down
             if (moveDown()){
                 setTimeout(generateOneNum,210);
+                setTimeout(isGameOver,250);
             }
-            isGameOver();
             break;
         default:
             break;
