@@ -172,8 +172,11 @@ $(document).keydown(function (e) {
     }
 });
 
+// passive event listener
 document.addEventListener('touchmove',function(e){
     e.preventDefault();
+},{
+    passive: false,
 });
 
 document.addEventListener('touchstart',function(e){
