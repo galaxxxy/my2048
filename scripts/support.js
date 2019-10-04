@@ -124,3 +124,16 @@ function noMove(board){
     }
     return true;
 }
+
+function throttle(func, wait){
+    let prev = 0;
+    return function(...args){
+        const context = this;
+        let now = Date.now();
+        if(now - prev >= wait){
+            func.apply(context, args);
+            prev = now;
+            console.log('eventdo');
+        }
+    }
+}

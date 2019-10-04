@@ -135,42 +135,44 @@ function generateOneNum(){
     return true;
 }
 
-$(document).keydown(function (e) {
+function keydownFunc(e) {
     //防止出现sidebar时方向键带动页面移动
     //e.preventDefault();
     switch (e.keyCode) {
-        case 37://left
-        e.preventDefault();
-        if (moveLeft()) {
-                setTimeout(generateOneNum,210);
-                setTimeout(isGameOver,250);
+        case 37: //left
+            e.preventDefault();
+            if (moveLeft()) {
+                setTimeout(generateOneNum, 210);
+                setTimeout(isGameOver, 250);
             }
             break;
-        case 38://up
-        e.preventDefault();
+        case 38: //up
+            e.preventDefault();
             if (moveUp()) {
-                setTimeout(generateOneNum,210);
-                setTimeout(isGameOver,250);
+                setTimeout(generateOneNum, 210);
+                setTimeout(isGameOver, 250);
             }
             break;
-        case 39://right 
-        e.preventDefault();
+        case 39: //right 
+            e.preventDefault();
             if (moveRight()) {
-                setTimeout(generateOneNum,210);
-                setTimeout(isGameOver,250);
+                setTimeout(generateOneNum, 210);
+                setTimeout(isGameOver, 250);
             }
             break;
-        case 40:// down
-        e.preventDefault();
-            if (moveDown()){
-                setTimeout(generateOneNum,210);
-                setTimeout(isGameOver,250);
+        case 40: // down
+            e.preventDefault();
+            if (moveDown()) {
+                setTimeout(generateOneNum, 210);
+                setTimeout(isGameOver, 250);
             }
             break;
         default:
             break;
-    }
-});
+    };
+}
+
+$(document).keydown(throttle(keydownFunc, 350));
 
 // passive event listener
 document.addEventListener('touchmove',function(e){
