@@ -174,10 +174,12 @@ function keydownFunc(e) {
 
 $(document).keydown(throttle(keydownFunc, 350));
 
-// passive event listener
-document.addEventListener('touchmove',function(e){
+function touchmoveHandler(e){
     e.preventDefault();
-},{
+}
+
+// passive event listener
+document.addEventListener('touchmove',debounce(touchmoveHandler, 250, true),{
     passive: false,
 });
 
@@ -222,7 +224,7 @@ document.addEventListener('touchend',function(e){
                 setTimeout(generateOneNum,210);
                 setTimeout(isGameOver,250);
             }
-        }else if(deltaX < 0){
+        }else if(deltaY < 0){
             //下滑
             if (moveDown()){
                 setTimeout(generateOneNum,210);

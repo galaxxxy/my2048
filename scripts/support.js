@@ -133,7 +133,27 @@ function throttle(func, wait){
         if(now - prev >= wait){
             func.apply(context, args);
             prev = now;
-            console.log('eventdo');
+        }
+    }
+}
+
+function debounce(func, wait, immediate){
+    let timeout = null;
+    return function(...args){
+        const context = this,
+              isExcute = !timeout;
+        clearTimeout(timeout);
+
+        if(immediate){
+            timeout = setTimeout(() => {
+                timeout = null;
+            }, wait);
+            if(isExcute) func.apply(context, args);
+            console.log("removeDefault");
+        }else{
+            timeout = setTimeout(() => {
+                func.apply(context, args);
+            });
         }
     }
 }
