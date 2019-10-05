@@ -94,7 +94,7 @@ function updateBoardView() {
     }
     $(".number-cell").css({
         'line-height': cellSideLength+'px',
-        'font-size': 0.6*cellSideLength+'px'
+        'font-size': 0.45*cellSideLength+'px'
     });
 }
 
@@ -172,7 +172,7 @@ function keydownFunc(e) {
     };
 }
 
-$(document).keydown(throttle(keydownFunc, 350));
+$(document).keydown(throttle(keydownFunc, 250));
 
 function touchmoveHandler(e){
     e.preventDefault();
@@ -388,11 +388,11 @@ function moveDown(){
 function isGameOver(){
     // 无格子且不能移动
     if(noSpace(board)&&noMove(board)){
-        console.log("dsfds");
         gameOver();
     }
 }
 
 function gameOver(){
-    alert("game over!");
+    alert(`你的分数是${score}分`);
+    setTimeout(init,10);
 }
